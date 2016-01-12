@@ -192,6 +192,9 @@ treeherder.provider('thEvents', function() {
             // of unclassified jobs by tier to be recalculated
             recalculateUnclassified: "recalc-unclassified-EVT",
 
+            // fired after clonejobs has finished filtering jobs
+            filteringComplete: "status-filtering-complete-EVT",
+
             groupStateChanged: "group-state-changed-EVT",
 
             toggleRevisions: "toggle-revisions-EVT",

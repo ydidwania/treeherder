@@ -455,6 +455,10 @@ treeherderApp.controller('MainCtrl', [
             }
         });
 
+        $scope.getFilteredUnclassifiedFailureCount = function(repoName) {
+            return ThResultSetStore.getFilteredUnclassifiedFailureCount(repoName);
+        };
+
         $scope.updateTiers();
 
         // clicked a checkbox in the tier menu

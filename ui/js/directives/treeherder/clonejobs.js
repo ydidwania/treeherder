@@ -840,6 +840,8 @@ treeherder.directive('thCloneJobs', [
             $rootScope.$on(
                 thEvents.globalFilterChanged, function(){
                     _.bind(filterJobs, scope, element)();
+                    console.log("globalFilterChanged", "filteringComplete")
+                    $rootScope.$emit(thEvents.filteringComplete);
                 });
 
             $rootScope.$on(
@@ -877,6 +879,8 @@ treeherder.directive('thCloneJobs', [
                     if(!_.isEmpty(platformData)){
                         _.bind(updateJobs, scope, platformData)();
                     }
+                    console.log("jobsClassified", "filteringComplete");
+                    $rootScope.$emit(thEvents.filteringComplete);
                 });
 
             $rootScope.$on(
@@ -904,6 +908,7 @@ treeherder.directive('thCloneJobs', [
                             resultsetAggregateId,
                             rsMap[resultSetId].rs_obj);
                     }
+                    $rootScope.$emit(thEvents.recalculateUnclassified);
                 });
 
             // Show runnable jobs when users press 'Add new jobs'
@@ -971,6 +976,8 @@ treeherder.directive('thCloneJobs', [
                 tableHtml += rowHtml;
             });
             tableEl.html(tableHtml);
+            // not sure if I need this one...
+            $rootScope.$emit(thEvents.recalculateUnclassified);
         };
 
         var $scope = null;

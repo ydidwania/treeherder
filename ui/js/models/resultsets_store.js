@@ -223,6 +223,10 @@ treeherder.factory('ThResultSetStore', [
             $timeout(updateUnclassifiedFailureCountForTiers, 0, true, $rootScope.repoName);
         });
 
+        $rootScope.$on(thEvents.recalculateUnclassified, function() {
+            $timeout(updateFilteredUnclassifiedFailureCount, 0, true, $rootScope.repoName);
+        });
+
         var addRepository = function(repoName){
             //Initialize a new repository in the repositories structure
 
@@ -261,6 +265,7 @@ treeherder.factory('ThResultSetStore', [
                     unclassifiedFailureMap: {},
                     // count of unclassified for the currently enabled tiers
                     unclassifiedFailureCountForTiers: 0,
+                    filteredUnclassifiedFailureCount: 0,
                     //used as the offset in paging
                     rsMapOldestTimestamp:null,
                     resultSets:[],
@@ -486,6 +491,16 @@ treeherder.factory('ThResultSetStore', [
         var getUnclassifiedFailureCount = function(repoName) {
             if (repositories[repoName]) {
                 return repositories[repoName].unclassifiedFailureCountForTiers;
+            }
+            return 0;
+        };
+
+        var getFilteredUnclassifiedFailureCount = function(repoName) {
+            if (_.has(repositories, repoName)) {
+                console.log("filteredUnclassifiedFailureCount",
+                            repositories[repoName].filteredUnclassifiedFailureCount,
+                            "unclassified", getUnclassifiedFailureCount(repoName));
+                return repositories[repoName].filteredUnclassifiedFailureCount;
             }
             return 0;
         };
@@ -1257,6 +1272,7 @@ treeherder.factory('ThResultSetStore', [
             getResultSetsMap: getResultSetsMap,
             getSelectedJob: getSelectedJob,
             getUnclassifiedFailureCount: getUnclassifiedFailureCount,
+            getFilteredUnclassifiedFailureCount: getFilteredUnclassifiedFailureCount,
             isNotLoaded: isNotLoaded,
             loadRevisions: loadRevisions,
             setSelectedJob: setSelectedJob,

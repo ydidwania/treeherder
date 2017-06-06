@@ -5,6 +5,7 @@ env:
     - DATABASE_URL='mysql://root@localhost/test_treeherder'
     - ELASTICSEARCH_URL='http://127.0.0.1:9200'
     - TREEHERDER_DJANGO_SECRET_KEY='secretkey-of-at-50-characters-to-pass-check-deploy'
+    - GRAPHQL=1
 matrix:
   include:
     # Each entry here creates another sub-job.
